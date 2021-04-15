@@ -15,25 +15,50 @@
 /*!***********************!*\
   !*** ./src/script.js ***!
   \***********************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! awesome-notifications */ "./node_modules/awesome-notifications/dist/index.js");
+/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(awesome_notifications__WEBPACK_IMPORTED_MODULE_0__);
 var sha = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js");
 
-var awn = __webpack_require__(/*! awesome-notifications */ "./node_modules/awesome-notifications/dist/index.js");
 
-console.log(awn);
+var container = document.getElementById('container');
 var inputForEmail = document.getElementById('email');
 var password = document.getElementById('password');
 var checkedPassword = document.getElementById('check-password');
-var registerButton = document.getElementById('btn');
+var registerButton = document.getElementById('btn'); // let takenFromStorage = localStorage.getItem('password');
+// console.log(takenFromStorage);
+
+function greenBorder(input1, input2) {
+  input1.style.border = '1px solid green';
+  input2.style.border = '1px solid green';
+}
 
 function checkInputs() {
   if (inputForEmail.value && password.value && password.value === checkedPassword.value) {
-    console.log('good');
+    greenBorder(password, checkedPassword);
     var hasedValue = sha(password.value);
-    localStorage.setItem('password', hasedValue); // new awn().success('Custom success message', {durations: {success: 0}})
+    localStorage.setItem('password', hasedValue);
+    container.style.display = 'none';
+    var notifier = new (awesome_notifications__WEBPACK_IMPORTED_MODULE_0___default())();
+    notifier.success('Your Registration Has Been Successfully Received', {
+      durations: {
+        success: 5000
+      }
+    });
   } else {
-    console.log("not good");
+    console.log("Something Went Wrong");
+    password.style.border = '2px solid red';
+
+    var _notifier = new (awesome_notifications__WEBPACK_IMPORTED_MODULE_0___default())();
+
+    _notifier.warning('Please Fill The Form Correctly', {
+      durations: {
+        success: 5000
+      }
+    });
   }
 }
 
@@ -841,6 +866,30 @@ process.umask = function() { return 0; };
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
 /******/ 		};
 /******/ 	})();
 /******/ 	
