@@ -19,50 +19,58 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! awesome-notifications */ "./node_modules/awesome-notifications/dist/index.js");
-/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(awesome_notifications__WEBPACK_IMPORTED_MODULE_0__);
-var sha = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js");
+/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js");
+/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_sha256__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! awesome-notifications */ "./node_modules/awesome-notifications/dist/index.js");
+/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(awesome_notifications__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var container = document.getElementById('container');
+var notifier = new (awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default())();
 var inputForEmail = document.getElementById('email');
 var password = document.getElementById('password');
-var checkedPassword = document.getElementById('check-password');
-var registerButton = document.getElementById('btn'); // let takenFromStorage = localStorage.getItem('password');
-// console.log(takenFromStorage);
+var RePassword = document.getElementById('re-password');
+var registerButton = document.getElementById('submit');
+var allData = [];
 
-function greenBorder(input1, input2) {
-  input1.style.border = '1px solid green';
-  input2.style.border = '1px solid green';
+function Database(email, password) {
+  this.email = email;
+  this.password = password;
 }
 
 function checkInputs() {
-  if (inputForEmail.value && password.value && password.value === checkedPassword.value) {
-    greenBorder(password, checkedPassword);
-    var hasedValue = sha(password.value);
-    localStorage.setItem('password', hasedValue);
-    container.style.display = 'none';
-    var notifier = new (awesome_notifications__WEBPACK_IMPORTED_MODULE_0___default())();
+  if (inputForEmail.value && password.value && password.value === RePassword.value) {
+    var email = inputForEmail.value;
+    var hashedPassword = js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password.value);
+    var hashedInformaton = new Database(email, hashedPassword);
+    allData.push(hashedInformaton);
+    localStorage.setItem('alldata', JSON.stringify(allData));
     notifier.success('Your Registration Has Been Successfully Received', {
       durations: {
-        success: 5000
+        success: 3000
       }
     });
-  } else {
+    inputForEmail.value = '';
+    password.value = '';
+    RePassword.value = '';
+  }
+
+  if (!(password.value === RePassword.value)) {
     console.log("Something Went Wrong");
-    password.style.border = '2px solid red';
-
-    var _notifier = new (awesome_notifications__WEBPACK_IMPORTED_MODULE_0___default())();
-
-    _notifier.warning('Please Fill The Form Correctly', {
+    notifier.warning('Please Repeat Password Correctly', {
       durations: {
-        success: 5000
+        warning: 3000
       }
     });
   }
 }
 
-registerButton.addEventListener('click', checkInputs);
+registerButton.addEventListener('click', function (e) {
+  if (inputForEmail.value && password.value && RePassword.value) {
+    e.preventDefault();
+  }
+
+  checkInputs();
+});
 
 /***/ }),
 

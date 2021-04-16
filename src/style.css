@@ -1,4 +1,5 @@
 
+@import url(../node_modules/awesome-notifications/dist/style.css);
 
 
 body {
@@ -10,7 +11,7 @@ body {
 
 .container {
     background-color: #ffffff;
-    width: 450px;
+    width: 400px;
     margin: 0 auto;
     padding: 50px;
     border-radius: 10px;
@@ -19,37 +20,34 @@ body {
 
 .container img {
     display: block;
-    width: 150px;
+    width: 120px;
     margin: 0 auto;
 }
 
-.inputs div {
+.inputs {
     margin-top: 50px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
 }
 
-.inputs div input {
+.inputs input {
     width: 220px;
     height: 20px;
 }
 
-.btn {
-    margin-top: 50px;
-    text-align: center;
-}
-
-.btn button {
-    font-family: Verdana;
-    padding: 10px 50px;
+#submit {
     background-color: #24a0ed;
+    cursor: pointer;
     color: #ffffff;
+    width: 150px;
+    height: 30px;
     border: none;
     border-radius: 5px;
 }
 
-
-.btn button:hover {
+#submit:hover {
     background-color: #58b2eb;
     cursor: pointer;
 }
