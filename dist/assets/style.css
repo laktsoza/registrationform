@@ -16,6 +16,12 @@ body {
     box-sizing: border-box;
 }
 
+.links {
+    display: flex;
+    justify-content: space-between;
+}
+
+
 .container img {
     display: block;
     width: 120px;

@@ -1,5 +1,5 @@
 
-@import url(../node_modules/awesome-notifications/dist/style.css);
+@import url('../node_modules/awesome-notifications/dist/style.css');
 
 
 body {
@@ -17,6 +17,12 @@ body {
     border-radius: 10px;
     box-sizing: border-box;
 }
+
+.links {
+    display: flex;
+    justify-content: space-between;
+}
+
 
 .container img {
     display: block;

@@ -29,33 +29,66 @@ var notifier = new (awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default()
 var inputForEmail = document.getElementById('email');
 var password = document.getElementById('password');
 var RePassword = document.getElementById('re-password');
-var registerButton = document.getElementById('submit');
-var allData = [];
+var form = document.getElementById('form');
+var users = [];
 
-function Database(email, password) {
+function checkStorage() {
+  if (localStorage.getItem('Users')) {
+    var savedUsers = localStorage.getItem('Users');
+    users = JSON.parse(savedUsers);
+    return users;
+  }
+}
+
+checkStorage();
+
+function clearInputs() {
+  inputForEmail.value = '';
+  password.value = '';
+  RePassword.value = '';
+}
+
+var exisit = false;
+
+function checkExist() {
+  if (users.length) {
+    exisit = users.some(function (element) {
+      return element.email === inputForEmail.value;
+    });
+  } else {
+    exisit = false;
+  }
+}
+
+function User(email, password) {
   this.email = email;
-  this.password = password;
+  this.password = js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password);
 }
 
 function checkInputs() {
   if (inputForEmail.value && password.value && password.value === RePassword.value) {
-    var email = inputForEmail.value;
-    var hashedPassword = js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password.value);
-    var hashedInformaton = new Database(email, hashedPassword);
-    allData.push(hashedInformaton);
-    localStorage.setItem('alldata', JSON.stringify(allData));
-    notifier.success('Your Registration Has Been Successfully Received', {
-      durations: {
-        success: 3000
-      }
-    });
-    inputForEmail.value = '';
-    password.value = '';
-    RePassword.value = '';
+    checkExist();
+
+    if (!exisit) {
+      var user = new User(inputForEmail.value, password.value);
+      users.push(user);
+      localStorage.setItem('Users', JSON.stringify(users));
+      notifier.success('Your Registration Has Been Successfully Received', {
+        durations: {
+          success: 3000
+        }
+      });
+      clearInputs();
+    } else {
+      notifier.warning('User Already Exisits', {
+        durations: {
+          warning: 2000
+        }
+      });
+    }
   }
 
   if (!(password.value === RePassword.value)) {
-    console.log("Something Went Wrong");
     notifier.warning('Please Repeat Password Correctly', {
       durations: {
         warning: 3000
@@ -64,11 +97,8 @@ function checkInputs() {
   }
 }
 
-registerButton.addEventListener('click', function (e) {
-  if (inputForEmail.value && password.value && RePassword.value) {
-    e.preventDefault();
-  }
-
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
   checkInputs();
 });
 
