@@ -11,6 +11,57 @@
 
 /***/ }),
 
+/***/ "./src/login.js":
+/*!**********************!*\
+  !*** ./src/login.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "users": () => (/* binding */ users),
+/* harmony export */   "loginIn": () => (/* binding */ loginIn),
+/* harmony export */   "loginListener": () => (/* binding */ loginListener)
+/* harmony export */ });
+/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js");
+/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_sha256__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! awesome-notifications */ "./node_modules/awesome-notifications/dist/index.js");
+/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(awesome_notifications__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var notifier = new (awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default())();
+var inputForEmail = document.getElementById('email');
+var password = document.getElementById('password');
+var form = document.getElementById('form');
+var users = JSON.parse(localStorage.getItem('Users')) || [];
+
+function loginIn() {
+  if (users.some(function (el) {
+    return el.email === inputForEmail.value && el.password === js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password.value);
+  })) {
+    notifier.success('Welcome', {
+      durations: {
+        success: 3000
+      }
+    });
+  } else {
+    notifier.warning('Password Is Not Correct', {
+      durations: {
+        warning: 2000
+      }
+    });
+  }
+}
+
+var loginListener = form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  loginIn();
+});
+
+
+/***/ }),
+
 /***/ "./src/script.js":
 /*!***********************!*\
   !*** ./src/script.js ***!
@@ -23,62 +74,44 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_sha256__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! awesome-notifications */ "./node_modules/awesome-notifications/dist/index.js");
 /* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(awesome_notifications__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./login */ "./src/login.js");
 
 
+
+console.log(_login__WEBPACK_IMPORTED_MODULE_2__.users);
+console.log(_login__WEBPACK_IMPORTED_MODULE_2__.loginIn);
+console.log(_login__WEBPACK_IMPORTED_MODULE_2__.loginListener);
 var notifier = new (awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default())();
 var inputForEmail = document.getElementById('email');
 var password = document.getElementById('password');
 var RePassword = document.getElementById('re-password');
 var form = document.getElementById('form');
-var users = [];
-
-function checkStorage() {
-  if (localStorage.getItem('Users')) {
-    var savedUsers = localStorage.getItem('Users');
-    users = JSON.parse(savedUsers);
-    return users;
-  }
-}
-
-checkStorage();
-
-function clearInputs() {
-  inputForEmail.value = '';
-  password.value = '';
-  RePassword.value = '';
-}
-
-var exisit = false;
-
-function checkExist() {
-  if (users.length) {
-    exisit = users.some(function (element) {
-      return element.email === inputForEmail.value;
-    });
-  } else {
-    exisit = false;
-  }
-}
+var users = JSON.parse(localStorage.getItem('Users')) || [];
 
 function User(email, password) {
   this.email = email;
   this.password = js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password);
 }
 
-function checkInputs() {
-  if (inputForEmail.value && password.value && password.value === RePassword.value) {
-    checkExist();
+function clearInputs(input1, input2, input3) {
+  input1.value = '';
+  input2.value = '';
+  input3.value = '';
+}
 
-    if (!exisit) {
-      var user = new User(inputForEmail.value, password.value);
-      users.push(user);
+function register() {
+  if (inputForEmail.value && password.value && password.value === RePassword.value) {
+    if (!users.some(function (element) {
+      return element.email === inputForEmail.value;
+    })) {
+      users.push(new User(inputForEmail.value, password.value));
       localStorage.setItem('Users', JSON.stringify(users));
       notifier.success('Your Registration Has Been Successfully Received', {
         durations: {
           success: 3000
         }
       });
-      clearInputs();
+      clearInputs(inputForEmail, password, RePassword);
     } else {
       notifier.warning('User Already Exisits', {
         durations: {
@@ -99,7 +132,7 @@ function checkInputs() {
 
 form.addEventListener('submit', function (e) {
   e.preventDefault();
-  checkInputs();
+  register();
 });
 
 /***/ }),
