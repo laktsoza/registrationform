@@ -2,5 +2,6 @@
 
 let mix = require('laravel-mix');
 
-mix.js('src/script.js', 'dist/assets').setPublicPath('dist');
-mix.css('src/style.css', 'dist/assets').setPublicPath('dist');
+mix.js('src/script.js', 'dist/assets').setPublicPath('dist')
+    .js('src/login.js', 'dist/assets')
+    .css('src/style.css', 'dist/assets');

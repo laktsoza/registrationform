@@ -8,24 +8,27 @@ const notifier = new AWN();
 
 const inputForEmail = document.getElementById('email');
 const password = document.getElementById('password');
-const form = document.getElementById('form');
-
+const form = document.getElementById('form-login');
 
 let users = JSON.parse(localStorage.getItem('Users')) || [];
 
-function loginIn(){
-    if(users.some(el => el.email === inputForEmail.value && el.password === sha(password.value))) {
+function loginIn(users, email, password){
+    if(users.some(el => el.email === email.value && el.password === sha(password.value))) {
         notifier.success('Welcome', {durations: {success: 3000}});
+        return;
+    }
+    if(users.some(el => el.email === email.value)) {
+        notifier.warning('Password Is Not Correct', {durations: {success: 3000}});
+        return;
     } else {
-        notifier.warning('Password Is Not Correct', {durations: {warning: 2000}});
+        notifier.warning('User Not Found', {durations: {success: 3000}});
     }
 }
 
-
-const loginListener = form.addEventListener('submit', e => {
+form.addEventListener('submit', e => {
     e.preventDefault();
-    loginIn();
+    loginIn(users, inputForEmail, password);
 });
 
-export {users, loginIn, loginListener};
+
 

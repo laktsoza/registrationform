@@ -11,76 +11,6 @@
 
 /***/ }),
 
-/***/ "./src/script.js":
-/*!***********************!*\
-  !*** ./src/script.js ***!
-  \***********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js");
-/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_sha256__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! awesome-notifications */ "./node_modules/awesome-notifications/dist/index.js");
-/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(awesome_notifications__WEBPACK_IMPORTED_MODULE_1__);
-
-
-var notifier = new (awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default())();
-var inputForEmail = document.getElementById('email');
-var password = document.getElementById('password');
-var RePassword = document.getElementById('re-password');
-var form = document.getElementById('form');
-var users = JSON.parse(localStorage.getItem('Users')) || [];
-
-function User(email, password) {
-  this.email = email;
-  this.password = js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password);
-}
-
-function clearInputs(input1, input2, input3) {
-  input1.value = '';
-  input2.value = '';
-  input3.value = '';
-}
-
-function register() {
-  if (inputForEmail.value && password.value && password.value === RePassword.value) {
-    if (!users.some(function (element) {
-      return element.email === inputForEmail.value;
-    })) {
-      users.push(new User(inputForEmail.value, password.value));
-      localStorage.setItem('Users', JSON.stringify(users));
-      notifier.success('Your Registration Has Been Successfully Received', {
-        durations: {
-          success: 3000
-        }
-      });
-      clearInputs(inputForEmail, password, RePassword);
-    } else {
-      notifier.warning('User Already Exisits', {
-        durations: {
-          warning: 2000
-        }
-      });
-    }
-  }
-
-  if (!(password.value === RePassword.value)) {
-    notifier.warning('Please Repeat Password Correctly', {
-      durations: {
-        warning: 3000
-      }
-    });
-  }
-}
-
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  register();
-});
-
-/***/ }),
-
 /***/ "./node_modules/js-sha256/src/sha256.js":
 /*!**********************************************!*\
   !*** ./node_modules/js-sha256/src/sha256.js ***!
@@ -611,19 +541,6 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
-/***/ "./src/style.css":
-/*!***********************!*\
-  !*** ./src/style.css ***!
-  \***********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -844,44 +761,10 @@ process.umask = function() { return 0; };
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/amd options */
 /******/ 	(() => {
 /******/ 		__webpack_require__.amdO = {};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/chunk loaded */
-/******/ 	(() => {
-/******/ 		var deferred = [];
-/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
-/******/ 			if(chunkIds) {
-/******/ 				priority = priority || 0;
-/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
-/******/ 				deferred[i] = [chunkIds, fn, priority];
-/******/ 				return;
-/******/ 			}
-/******/ 			var notFulfilled = Infinity;
-/******/ 			for (var i = 0; i < deferred.length; i++) {
-/******/ 				var [chunkIds, fn, priority] = deferred[i];
-/******/ 				var fulfilled = true;
-/******/ 				for (var j = 0; j < chunkIds.length; j++) {
-/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
-/******/ 						chunkIds.splice(j--, 1);
-/******/ 					} else {
-/******/ 						fulfilled = false;
-/******/ 						if(priority < notFulfilled) notFulfilled = priority;
-/******/ 					}
-/******/ 				}
-/******/ 				if(fulfilled) {
-/******/ 					deferred.splice(i--, 1)
-/******/ 					result = fn();
-/******/ 				}
-/******/ 			}
-/******/ 			return result;
-/******/ 		};
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
@@ -936,66 +819,62 @@ process.umask = function() { return 0; };
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/jsonp chunk loading */
-/******/ 	(() => {
-/******/ 		// no baseURI
-/******/ 		
-/******/ 		// object to store loaded and loading chunks
-/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
-/******/ 		var installedChunks = {
-/******/ 			"/assets/script": 0,
-/******/ 			"assets/style": 0
-/******/ 		};
-/******/ 		
-/******/ 		// no chunk on demand loading
-/******/ 		
-/******/ 		// no prefetching
-/******/ 		
-/******/ 		// no preloaded
-/******/ 		
-/******/ 		// no HMR
-/******/ 		
-/******/ 		// no HMR manifest
-/******/ 		
-/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
-/******/ 		
-/******/ 		// install a JSONP callback for chunk loading
-/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
-/******/ 			var [chunkIds, moreModules, runtime] = data;
-/******/ 			// add "moreModules" to the modules object,
-/******/ 			// then flag all "chunkIds" as loaded and fire callback
-/******/ 			var moduleId, chunkId, i = 0;
-/******/ 			for(moduleId in moreModules) {
-/******/ 				if(__webpack_require__.o(moreModules, moduleId)) {
-/******/ 					__webpack_require__.m[moduleId] = moreModules[moduleId];
-/******/ 				}
-/******/ 			}
-/******/ 			if(runtime) runtime(__webpack_require__);
-/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
-/******/ 			for(;i < chunkIds.length; i++) {
-/******/ 				chunkId = chunkIds[i];
-/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
-/******/ 					installedChunks[chunkId][0]();
-/******/ 				}
-/******/ 				installedChunks[chunkIds[i]] = 0;
-/******/ 			}
-/******/ 			__webpack_require__.O();
-/******/ 		}
-/******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunkregistrationform"] = self["webpackChunkregistrationform"] || [];
-/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
-/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
-/******/ 	})();
-/******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["assets/style"], () => (__webpack_require__("./src/script.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["assets/style"], () => (__webpack_require__("./src/style.css")))
-/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+/*!**********************!*\
+  !*** ./src/login.js ***!
+  \**********************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js");
+/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_sha256__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! awesome-notifications */ "./node_modules/awesome-notifications/dist/index.js");
+/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(awesome_notifications__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var notifier = new (awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default())();
+var inputForEmail = document.getElementById('email');
+var password = document.getElementById('password');
+var form = document.getElementById('form-login');
+var users = JSON.parse(localStorage.getItem('Users')) || [];
+
+function loginIn(users, email, password) {
+  if (users.some(function (el) {
+    return el.email === email.value && el.password === js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password.value);
+  })) {
+    notifier.success('Welcome', {
+      durations: {
+        success: 3000
+      }
+    });
+    return;
+  }
+
+  if (users.some(function (el) {
+    return el.email === email.value;
+  })) {
+    notifier.warning('Password Is Not Correct', {
+      durations: {
+        success: 3000
+      }
+    });
+    return;
+  } else {
+    notifier.warning('User Not Found', {
+      durations: {
+        success: 3000
+      }
+    });
+  }
+}
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  loginIn(users, inputForEmail, password);
+});
+})();
+
 /******/ })()
 ;

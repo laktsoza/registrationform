@@ -2,12 +2,6 @@
 
 import sha from 'js-sha256';
 import AWN from 'awesome-notifications';
-import {users as usersFromLogin, loginIn, loginListener} from './login'; 
-
-
-console.log(usersFromLogin);
-console.log(loginIn);
-console.log(loginListener);
 
 
 const notifier = new AWN();
