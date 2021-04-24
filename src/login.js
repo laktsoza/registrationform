@@ -15,6 +15,9 @@ let users = JSON.parse(localStorage.getItem('Users')) || [];
 function loginIn(users, email, password){
     if(users.some(el => el.email === email.value && el.password === sha(password.value))) {
         notifier.success('Welcome', {durations: {success: 3000}});
+        setTimeout(() => {
+            window.location = 'file:///C:/Users/Computer/Desktop/twitter/registrationform/dist/profile.html';
+        }, 1000);
         return;
     }
     if(users.some(el => el.email === email.value)) {

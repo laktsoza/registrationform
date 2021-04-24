@@ -849,6 +849,9 @@ function loginIn(users, email, password) {
         success: 3000
       }
     });
+    setTimeout(function () {
+      window.location = 'file:///C:/Users/Computer/Desktop/twitter/registrationform/dist/profile.html';
+    }, 1000);
     return;
   }
 

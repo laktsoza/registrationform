@@ -56,6 +56,31 @@ body {
     cursor: pointer;
 }
 
+.profile-container {
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.profile-image {
+    border-radius: 50%;
+    overflow: hidden;
+
+}
+.profile-image img {
+    width: 300px;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    gap: 200px;
+}
+
+.followers {
+    width: 400px;
+    background-color: teal;
+}
+
 
 
 
