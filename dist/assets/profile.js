@@ -11,6 +11,74 @@
 
 /***/ }),
 
+/***/ "./src/login.js":
+/*!**********************!*\
+  !*** ./src/login.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js");
+/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_sha256__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! awesome-notifications */ "./node_modules/awesome-notifications/dist/index.js");
+/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(awesome_notifications__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var notifier = new (awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default())();
+var inputForEmail = document.getElementById('email');
+var password = document.getElementById('password');
+var form = document.getElementById('form-login');
+var users = JSON.parse(localStorage.getItem('Users')) || [];
+var loginedUser;
+
+function loginIn(users, email, password) {
+  if (users.some(function (el) {
+    return el.email === email.value && el.password === js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password.value);
+  })) {
+    loginedUser = users.find(function (el) {
+      return el.email === email.value && el.password === js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password.value);
+    });
+    notifier.success('Welcome', {
+      durations: {
+        success: 3000
+      }
+    });
+    setTimeout(function () {
+      window.location = 'http://127.0.0.1:5500/dist/profile.html';
+    }, 1000);
+    return;
+  }
+
+  if (users.some(function (el) {
+    return el.email === email.value;
+  })) {
+    notifier.warning('Password Is Not Correct', {
+      durations: {
+        success: 3000
+      }
+    });
+    return;
+  } else {
+    notifier.warning('User Not Found', {
+      durations: {
+        success: 3000
+      }
+    });
+  }
+}
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  loginIn(users, inputForEmail, password);
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (loginedUser);
+
+/***/ }),
+
 /***/ "./node_modules/js-sha256/src/sha256.js":
 /*!**********************************************!*\
   !*** ./node_modules/js-sha256/src/sha256.js ***!
@@ -824,67 +892,13 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!**********************!*\
-  !*** ./src/login.js ***!
-  \**********************/
+/*!************************!*\
+  !*** ./src/profile.js ***!
+  \************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js");
-/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_sha256__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! awesome-notifications */ "./node_modules/awesome-notifications/dist/index.js");
-/* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(awesome_notifications__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./login */ "./src/login.js");
 
-
-var notifier = new (awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default())();
-var inputForEmail = document.getElementById('email');
-var password = document.getElementById('password');
-var form = document.getElementById('form-login');
-var users = JSON.parse(localStorage.getItem('Users')) || [];
-var loginedUser;
-
-function loginIn(users, email, password) {
-  if (users.some(function (el) {
-    return el.email === email.value && el.password === js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password.value);
-  })) {
-    loginedUser = users.find(function (el) {
-      return el.email === email.value && el.password === js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password.value);
-    });
-    notifier.success('Welcome', {
-      durations: {
-        success: 3000
-      }
-    });
-    setTimeout(function () {
-      window.location = 'http://127.0.0.1:5500/dist/profile.html';
-    }, 1000);
-    return;
-  }
-
-  if (users.some(function (el) {
-    return el.email === email.value;
-  })) {
-    notifier.warning('Password Is Not Correct', {
-      durations: {
-        success: 3000
-      }
-    });
-    return;
-  } else {
-    notifier.warning('User Not Found', {
-      durations: {
-        success: 3000
-      }
-    });
-  }
-}
-
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  loginIn(users, inputForEmail, password);
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (loginedUser);
+console.log(_login__WEBPACK_IMPORTED_MODULE_0__.default);
 })();
 
 /******/ })()

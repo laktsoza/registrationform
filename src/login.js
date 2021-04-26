@@ -10,13 +10,16 @@ const inputForEmail = document.getElementById('email');
 const password = document.getElementById('password');
 const form = document.getElementById('form-login');
 
+
 let users = JSON.parse(localStorage.getItem('Users')) || [];
+let loginedUser;
 
 function loginIn(users, email, password){
     if(users.some(el => el.email === email.value && el.password === sha(password.value))) {
+        loginedUser = users.find(el => el.email === email.value && el.password === sha(password.value));
         notifier.success('Welcome', {durations: {success: 3000}});
         setTimeout(() => {
-            window.location = 'file:///C:/Users/Computer/Desktop/twitter/registrationform/dist/profile.html';
+            window.location = 'http://127.0.0.1:5500/dist/profile.html';
         }, 1000);
         return;
     }
@@ -31,7 +34,12 @@ function loginIn(users, email, password){
 form.addEventListener('submit', e => {
     e.preventDefault();
     loginIn(users, inputForEmail, password);
+    
 });
+
+export default loginedUser;
+
+
 
 
 
