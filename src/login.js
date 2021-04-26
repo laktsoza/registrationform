@@ -14,12 +14,18 @@ const form = document.getElementById('form-login');
 let users = JSON.parse(localStorage.getItem('Users')) || [];
 let loginedUser;
 
+function Session(userId) {
+    this.userId = userId;
+    this.sessionTime = Date.now() + 1000 * 60;
+}
+
 function loginIn(users, email, password){
     if(users.some(el => el.email === email.value && el.password === sha(password.value))) {
         loginedUser = users.find(el => el.email === email.value && el.password === sha(password.value));
+        sessionStorage.setItem('LoginedUser', JSON.stringify(new Session(loginedUser.id)))
         notifier.success('Welcome', {durations: {success: 3000}});
         setTimeout(() => {
-            window.location = 'http://127.0.0.1:5500/dist/profile.html';
+            window.location = '/dist/profile.html';
         }, 1000);
         return;
     }
@@ -37,7 +43,6 @@ form.addEventListener('submit', e => {
     
 });
 
-export default loginedUser;
 
 
 

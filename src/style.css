@@ -91,16 +91,27 @@ body {
 
 .followers ul {
     display: flex;
-    gap: 50px;
+    flex-direction: column;   
 }
 
 .followers ul li {
     list-style: none;
-    border-radius: 3px;
-    padding: 3px;
+    margin-top: 5px;
+    width: 320px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.followers ul li div {
     width: 200px;
     background-color: #24a0ed;
-    color: #ffffff;
+    padding: 3px 0;
+    border-radius: 3px;
+}
+
+.followers ul li button {
+    padding: 3px 20px;
 }
 
 

@@ -828,9 +828,6 @@ var __webpack_exports__ = {};
   !*** ./src/login.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 /* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js");
 /* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_sha256__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var awesome_notifications__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! awesome-notifications */ "./node_modules/awesome-notifications/dist/index.js");
@@ -844,6 +841,11 @@ var form = document.getElementById('form-login');
 var users = JSON.parse(localStorage.getItem('Users')) || [];
 var loginedUser;
 
+function Session(userId) {
+  this.userId = userId;
+  this.sessionTime = Date.now() + 1000 * 60;
+}
+
 function loginIn(users, email, password) {
   if (users.some(function (el) {
     return el.email === email.value && el.password === js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password.value);
@@ -851,13 +853,14 @@ function loginIn(users, email, password) {
     loginedUser = users.find(function (el) {
       return el.email === email.value && el.password === js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password.value);
     });
+    sessionStorage.setItem('LoginedUser', JSON.stringify(new Session(loginedUser.id)));
     notifier.success('Welcome', {
       durations: {
         success: 3000
       }
     });
     setTimeout(function () {
-      window.location = 'http://127.0.0.1:5500/dist/profile.html';
+      window.location = '/dist/profile.html';
     }, 1000);
     return;
   }
@@ -884,7 +887,6 @@ form.addEventListener('submit', function (e) {
   e.preventDefault();
   loginIn(users, inputForEmail, password);
 });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (loginedUser);
 })();
 
 /******/ })()

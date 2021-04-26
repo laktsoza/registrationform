@@ -34,14 +34,13 @@ var password = document.getElementById('password');
 var RePassword = document.getElementById('re-password');
 var form = document.getElementById('form');
 var users = JSON.parse(localStorage.getItem('Users')) || [];
-var followers = [];
 
-function User(email, username, password, id) {
+function User(email, username, password) {
   this.email = email;
   this.username = username;
   this.password = js_sha256__WEBPACK_IMPORTED_MODULE_0___default()(password);
-  this.id = id;
-  this.followers = followers;
+  this.id = (0,uuid__WEBPACK_IMPORTED_MODULE_2__.default)();
+  this.followers = [];
 }
 
 function clearInputs(input1, input2, input3, input4) {
@@ -58,7 +57,7 @@ function register() {
     if (!users.some(function (element) {
       return element.email === inputForEmail.value;
     })) {
-      users.push(new User(inputForEmail.value, inputForUsername.value, password.value, (0,uuid__WEBPACK_IMPORTED_MODULE_2__.default)(), followers));
+      users.push(new User(inputForEmail.value, inputForUsername.value, password.value));
       localStorage.setItem('Users', JSON.stringify(users));
       notifier.success('Your Registration Has Been Successfully Received', {
         durations: {
