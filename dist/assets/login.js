@@ -843,7 +843,7 @@ var loginedUser;
 
 function Session(userId) {
   this.userId = userId;
-  this.sessionTime = Date.now() + 1000 * 60;
+  this.sessionTime = Date.now() + 1000 * 15;
 }
 
 function loginIn(users, email, password) {
@@ -860,7 +860,7 @@ function loginIn(users, email, password) {
       }
     });
     setTimeout(function () {
-      window.location = '/dist/profile.html';
+      window.location = '/profile.html';
     }, 1000);
     return;
   }

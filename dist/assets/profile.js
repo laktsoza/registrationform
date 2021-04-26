@@ -27,7 +27,8 @@ function checkvalidation() {
       }
     });
   } else {
-    window.location = 'http://127.0.0.1:5500/dist/login.html';
+    window.location = '/login.html';
+    sessionStorage.clear();
   }
 }
 

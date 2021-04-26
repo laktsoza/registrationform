@@ -16,7 +16,7 @@ let loginedUser;
 
 function Session(userId) {
     this.userId = userId;
-    this.sessionTime = Date.now() + 1000 * 60;
+    this.sessionTime = Date.now() + 1000 * 15;
 }
 
 function loginIn(users, email, password){
@@ -25,7 +25,7 @@ function loginIn(users, email, password){
         sessionStorage.setItem('LoginedUser', JSON.stringify(new Session(loginedUser.id)))
         notifier.success('Welcome', {durations: {success: 3000}});
         setTimeout(() => {
-            window.location = '/dist/profile.html';
+            window.location = '/profile.html';
         }, 1000);
         return;
     }
@@ -40,7 +40,6 @@ function loginIn(users, email, password){
 form.addEventListener('submit', e => {
     e.preventDefault();
     loginIn(users, inputForEmail, password);
-    
 });
 
 
