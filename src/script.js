@@ -14,12 +14,14 @@ const RePassword = document.getElementById('re-password');
 const form = document.getElementById('form');
 
 let users = JSON.parse(localStorage.getItem('Users')) || [];
+let followers = [];
 
 function User(email, username, password, id){
     this.email = email;
     this.username = username;
     this.password = sha(password);
     this.id = id;
+    this.followers = followers;
 }
 
 function clearInputs (input1, input2, input3, input4) {
@@ -35,7 +37,7 @@ function register(){
     if((inputForEmail.value && password.value) && (password.value === RePassword.value) && inputForUsername.value) {
         console.log(inputForUsername.value);
         if(!users.some(element => element.email === inputForEmail.value)) {
-            users.push(new User(inputForEmail.value, inputForUsername.value, password.value, uuidv4()));
+            users.push(new User(inputForEmail.value, inputForUsername.value, password.value, uuidv4(), followers));
             localStorage.setItem('Users', JSON.stringify(users));
             notifier.success('Your Registration Has Been Successfully Received', {durations: {success: 3000}});
             clearInputs(inputForEmail, inputForUsername, password, RePassword);
